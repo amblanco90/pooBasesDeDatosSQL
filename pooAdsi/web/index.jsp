@@ -4,6 +4,8 @@
     Author     : Ricardo
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="com.adsi.modelo.Aprendiz"%>
 <%@page import="com.adsi.control.Controlador"%>
 <%@page import="com.adsi.control.Conexion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -21,13 +23,24 @@
           
           controlador.conectar();
           
-          controlador.listarAprendices();
+          List<Aprendiz> lista = controlador.listarAprendices();
+          
+          
            
 
         %>
         
         
         <h1><%=adsi%></h1>
+        
+        <%
+          for (Aprendiz item : lista){
+           %>   
+                <%=item.getDocumento() %> <br>
+           <%
+          }
+        
+        %>
         
         
     </body>

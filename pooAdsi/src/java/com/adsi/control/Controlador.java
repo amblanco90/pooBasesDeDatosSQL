@@ -21,6 +21,8 @@ public LinkedList listarAprendices( ) throws SQLException {
         if (!hayConexion()) {
             throw new SQLException(" No existe conexion abierta ");
         }
+        
+        
         PreparedStatement pst = null;
         ResultSet rst = null;
         LinkedList lista = new LinkedList();
@@ -33,12 +35,9 @@ public LinkedList listarAprendices( ) throws SQLException {
             while (rst.next()) {
                 lista.add(Aprendiz.load(rst));     //Recorre el RS y llena una lista
             }
+            System.out.println("El Query " + query );
             
-            
-        } catch (Exception e) {
-            System.out.println(" Error " + e);
-            throw new SQLException(" Error! no se ha podido listar los resultados ADSI");
-        } finally {
+        }  finally {
             if (pst != null) {
                 pst.close();
                 pst = null;

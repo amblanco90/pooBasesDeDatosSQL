@@ -99,7 +99,7 @@ public class Aprendiz {
         aprendiz.setNombres(rs.getString(3));
         aprendiz.setApellidos(rs.getString(4));
         aprendiz.setEdad(rs.getInt(5));
-        aprendiz.setEdad(rs.getInt(6));
+        aprendiz.setSexo(rs.getString(6));
         aprendiz.setFk_curso(rs.getInt(7));       
                        
         return aprendiz;
