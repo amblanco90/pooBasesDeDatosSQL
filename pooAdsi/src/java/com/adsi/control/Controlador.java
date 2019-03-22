@@ -7,6 +7,7 @@ package com.adsi.control;
 
 import com.adsi.modelo.Aprendiz;
 import com.adsi.modelo.Curso;
+import java.io.IOException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,7 +30,7 @@ public LinkedList findAllAprendices( ) throws SQLException {
         LinkedList lista = new LinkedList();
         try {
             String query;
-            query = "select * from aprendices  ";    //Definir la consulta
+            query = "select * from aprendices order by id_aprendices desc ";    //Definir la consulta
             pst = con.prepareStatement(query);                      //Prepararla
                   
             rst = pst.executeQuery();                               //Ejecutarla 
@@ -164,5 +165,36 @@ public LinkedList findAprendicesCursoEdad(int p_curso,int edad ) throws SQLExcep
         return lista;                            //Retorna la lista llena
     }
    
-    
+public void adicionarAprendiz(Aprendiz aprendiz) throws SQLException, IOException {
+        if (!hayConexion()) {
+            throw new SQLException("SIN CONEXION");
+        }
+        PreparedStatement pst = null;
+        ResultSet rst = null;
+        try {
+            pst = con.prepareStatement("INSERT INTO `aprendices` "
+                    + "(`documento`, `nombres`, `apellidos`, `edad`, `sexo`, `fk_curso`) "
+                    + " VALUES (?, ?, ?, ?, ?, ?);  ");
+                    pst.setString(1, aprendiz.getDocumento());
+                    pst.setString(2, aprendiz.getNombres());
+                    pst.setString(3, aprendiz.getApellidos());
+                    pst.setInt(4, aprendiz.getEdad());
+                    pst.setString(5, aprendiz.getSexo());
+                    pst.setInt(6, aprendiz.getFk_curso());
+           
+            pst.execute();
+
+        }catch(Exception Ex){
+            System.out.println("Error en AdicionarDato : \n"+Ex);
+        } finally {
+            if (pst != null) {
+                pst.close();
+            }
+            if (rst != null) {
+                rst.close();
+            }
+        }
+    }
+
+
 }
